@@ -1,10 +1,11 @@
-*{
+* {
     margin: 0px;
     padding: 0px;
     font-family: "Inter", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
-#nav{
-    background-color:#747782 ; 
+
+#nav {
+    background-color: #747782;
     height: 40px;
     width: 100%;
     display: flex;
@@ -17,14 +18,16 @@
     color: #fbfafa;
     border-bottom: 1px solid rgb(25, 62, 85);
 }
-#chat{
+
+#chat {
     height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-#chatsection{
+
+#chatsection {
     margin-top: 40px;
     padding: 10px;
     height: 100%;
@@ -34,9 +37,10 @@
     justify-content: center;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 70px;
+    margin-bottom: 80px;
 }
-.chatTexts{
+
+.chatTexts {
     padding: 10px;
     height: auto;
     width: auto;
@@ -47,7 +51,8 @@
     margin-bottom: 10px;
     align-self: flex-end;
 }
-.aiTexts{
+
+.aiTexts {
     padding: 10px;
     height: auto;
     width: auto;
@@ -58,6 +63,7 @@
     border-radius: 20px;
     margin-bottom: 10px;
 }
+
 #btmsection {
     margin-bottom: 20px;
     border-radius: 30px;
@@ -69,17 +75,19 @@
     position: fixed;
     bottom: 0px;
     display: flex;
-    box-shadow: 0 4px 15px rgba(68, 63, 63, 0.5); 
+    box-shadow: 0 4px 15px rgba(68, 63, 63, 0.5);
 }
 
-#search{
+#search {
     display: flex;
-    position:relative;
+    position: relative;
     left: 0px;
     width: 90%;
 }
-#dnwBTN{
-    position:relative;
+
+#dnwBTN {
+    padding: 8px;
+    position: relative;
     right: 0px;
     border-radius: 20px;
     max-width: 85px;
@@ -88,20 +96,25 @@
     font-weight: 600;
     max-height: 50px;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    
+    margin-left: 3px;
+
 }
+
 #dnwBTN:hover {
-    background-color: #bfbfbf;   
-    transform: scale(1.05);  
+    background-color: #bfbfbf;
+    transform: scale(1.05);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgb(27, 102, 214);
+
 }
 
 #dnwBTN:active {
-    transform: scale(0.95);    
+    transform: scale(0.95);
 }
-#chatInput{
+
+#chatInput {
     height: 30px;
-    width:80%;
+    width: 80%;
     max-width: 500px;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
@@ -112,14 +125,15 @@
     border: none;
     overflow: hidden;
 }
+
 #chatInput:focus {
     border-radius: 25px;
     height: 50px;
-    outline: none;         
-    border: 2px solid #7586cb; 
+    outline: none;
+    border: 2px solid #7586cb;
 }
 
-#searchBtn{
+#searchBtn {
     max-height: 50px;
     width: 50px;
     border: none;
@@ -130,8 +144,66 @@
     font-size: larger;
     position: relative;
 }
+
 #searchBtn:hover {
-    background-color: #bfbfbf;   
-    cursor: pointer;            
-   
+    background-color: #bfbfbf;
+    cursor: pointer;
+}
+
+#clearBTN {
+    border-radius: 20px;
+    max-width: 50px;
+    border: none;
+    position: relative;
+    background-color: #DCDCDC;
+    font-weight: 600;
+    max-height: 50px;
+    padding: 8px;
+    margin-left: 3px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+#clearBTN:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    transform: scale(1.05);
+    border: 1px solid rgb(27, 102, 214);
+    background-color: #bfbfbf;
+
+}
+
+#clearBTN:active {
+    transform: scale(0.95);
+}
+
+#wellcome {
+    z-index: 1000;
+    position: fixed;
+    top: 350px;
+    font-size: larger;
+    font-size: 22px;
+    font-weight: bold;
+    color: #444;
+    border-right: 2px solid #444;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.featureMsg {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #747782;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(68, 63, 63, 0.5);
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    width: fit-content;
+    max-width: 80%;
+    z-index: 1000;
+    border: 2px solid;
 }
