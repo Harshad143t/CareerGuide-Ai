@@ -212,8 +212,8 @@
   position: absolute;
   right: 10px;
   display: inline-block;
-  width: 46px;
-  height: 23px;
+  width: 49px;
+  height: 25px;
   margin-left: 15px;
 }
 
@@ -230,7 +230,7 @@
   background-color: #ccc;
   transition: .4s;
   border-radius: 26px;
-  border: 1px solid rgb(69, 58, 58);
+  border: 2px solid rgb(69, 58, 58);
 }
 
 .slider:before {
@@ -323,5 +323,3 @@ body.dark-mode,
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
     border-color: #444;
 }
-
-
