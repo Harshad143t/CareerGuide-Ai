@@ -286,8 +286,7 @@ body.dark-mode,
 
 .dark-mode #chatInput {
     background-color: #2c2c2c;
-    color: #e0e0e0;
-    border: 1px solid #444;
+    color: #454242;
 }
 
 .dark-mode #chatInput:focus {
@@ -324,3 +323,4 @@ body.dark-mode,
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
     border-color: #444;
 }
+
