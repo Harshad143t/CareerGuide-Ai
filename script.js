@@ -4,7 +4,6 @@ const searchBtn = document.getElementById("searchBtn");
 const dnwBTN = document.getElementById("dnwBTN");
 const chatsectionDiv = document.getElementById("chatsection");
 
-
 let conversationHistory = JSON.parse(localStorage.getItem("chatHistory")) || [];
 
 conversationHistory.forEach(msg => {
@@ -25,8 +24,6 @@ function scrollToLatest() {
   }
 }
 
-
-
 sendText.addEventListener("click", async () => {
   let userText = chatInput.value.trim();
   if (!userText) return;
@@ -40,12 +37,10 @@ sendText.addEventListener("click", async () => {
   chatsectionDiv.appendChild(chatText);
   scrollToLatest();
 
-
   conversationHistory.push({ sender: "User", text: userText });
   localStorage.setItem("chatHistory", JSON.stringify(conversationHistory));
 
   chatInput.value = "";
-
 
   try {
     let response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyAj52FLcVsU60wgiGIYIfEn07L0x5Ypbnk", {
@@ -54,16 +49,25 @@ sendText.addEventListener("click", async () => {
       body: JSON.stringify({
         contents: [
           {
-            parts: [{ text: "Conversation so far:\n" + conversationHistory.map(m => `${m.sender}: ${m.text}`).join("\n") + `\nAI reply to last user message: ${userText}` }]
+            parts: [{
+              text: `You are a friendly,
+               concise AI job suggestion assistant.
+                Provide short, clear, and human-like responses focused on job suggestions,
+                career advice, or skill recommendations.
+                Avoid long or confusing replies.,
+                
+                Use simple formatting: bullet points or numbered lists for multiple items,
+                plain text for single suggestions.
+                Avoid excessive special characters (e.g., asterisks, hashtags) and markdown artifacts. 
+                Be clear and encouraging. Example: "Try learning Python for data analyst roles. Check out online courses!" Conversation so far:\n${conversationHistory.map(m => `${m.sender}: ${m.text}`).join("\n")}\nAI reply to last user message: ${userText}`
+            }]
           }
         ]
       })
     });
 
     let data = await response.json();
-    let aiReply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "⚠️ AI couldn’t generate a reply.";
-
-
+    let aiReply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn’t come up with a job suggestion right now.";
     let aiText = document.createElement("div");
     aiText.classList.add("aiTexts");
     aiText.innerHTML = `<p>${aiReply.replace(/\n/g, "<br>")}</p>`;
@@ -71,7 +75,6 @@ sendText.addEventListener("click", async () => {
     if (oldLastAI) oldLastAI.removeAttribute("id");
     aiText.id = "latestMsg";
     chatsectionDiv.appendChild(aiText);
-
 
     conversationHistory.push({ sender: "AI", text: aiReply });
     localStorage.setItem("chatHistory", JSON.stringify(conversationHistory));
@@ -82,20 +85,27 @@ sendText.addEventListener("click", async () => {
     console.error("API Error:", err);
     let errorText = document.createElement("div");
     errorText.classList.add("aiTexts");
-    errorText.innerHTML = `<p>⚠️ Error fetching AI response.</p>`;
+    errorText.innerHTML = `<p>Error fetching job suggestion.</p>`;
     chatsectionDiv.appendChild(errorText);
     scrollToLatest();
   }
 });
 
-
 clearBTN.addEventListener("click", () => {
   conversationHistory = [];
   localStorage.removeItem("chatHistory");
   chatsectionDiv.innerHTML = "";
+
+  let msgDiv = document.createElement("div");
+  msgDiv.classList.add("featureMsg");
+  msgDiv.textContent = "Chat cleared";
+
+  document.body.appendChild(msgDiv);
+
+  setTimeout(() => {
+    msgDiv.remove();
+  }, 2000);
 });
-
-
 
 chatInput.addEventListener("focus", () => {
   searchBtn.style.borderTopRightRadius = "20px";
@@ -127,7 +137,6 @@ chatInput.addEventListener("blur", () => {
   clearBTN.style.left = "0";
 });
 
-
 function wellcome() {
   let well = document.getElementById("wellcome");
   if (chatsectionDiv.children.length === 0) {
@@ -137,9 +146,7 @@ function wellcome() {
   }
 }
 
-
 wellcome();
-
 
 const observer = new MutationObserver(() => {
   wellcome();
@@ -147,12 +154,10 @@ const observer = new MutationObserver(() => {
 
 observer.observe(chatsectionDiv, { childList: true });
 
-
 const well = document.getElementById("wellcome");
 
-
 const messages = [
-  "just say 'hey help me find a job' ",
+  "just send me a 'hey' so we can start ",
   "Let’s find your first job together",
   "Ask me about skills, jobs, or careers",
   "Ready to discover your path?",
@@ -167,7 +172,6 @@ function typeEffect() {
   const currentMsg = messages[msgIndex];
 
   if (!isDeleting) {
-
     well.textContent = currentMsg.substring(0, charIndex + 1);
     charIndex++;
 
@@ -177,7 +181,6 @@ function typeEffect() {
       return;
     }
   } else {
-
     well.textContent = currentMsg.substring(0, charIndex - 1);
     charIndex--;
 
@@ -186,7 +189,6 @@ function typeEffect() {
       msgIndex = (msgIndex + 1) % messages.length;
     }
   }
-
 
   const speed = isDeleting ? 40 : 100;
   setTimeout(typeEffect, speed);
@@ -208,3 +210,45 @@ dnwBTN.addEventListener("click", () => {
     msgDiv.remove();
   }, 4000);
 });
+
+const themeToggle = document.getElementById('themeToggle');
+themeToggle.addEventListener('change', () => {
+  if (themeToggle.checked) {
+    document.body.classList.add('dark-mode');
+    localStorage.setItem('theme', 'dark');
+
+  let msgDiv = document.createElement("div");
+  msgDiv.classList.add("featureMsg");
+  msgDiv.textContent = "Dark mode applied";
+
+  document.body.appendChild(msgDiv);
+
+  setTimeout(() => {
+    msgDiv.remove();
+  }, 2500);
+
+  } else {
+    document.body.classList.remove('dark-mode');
+    localStorage.setItem('theme', 'light');
+    let msgDiv = document.createElement("div");
+  msgDiv.classList.add("featureMsg");
+  msgDiv.textContent = "light mode applied";
+
+  document.body.appendChild(msgDiv);
+
+  setTimeout(() => {
+    msgDiv.remove();
+  }, 2500);
+  }
+});
+
+// save theme  
+
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+  document.body.classList.add('dark-mode');
+  themeToggle.checked = true;
+} else {
+  document.body.classList.remove('dark-mode');
+  themeToggle.checked = false;
+}
