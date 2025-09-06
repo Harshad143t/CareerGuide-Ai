@@ -50,16 +50,19 @@ sendText.addEventListener("click", async () => {
         contents: [
           {
             parts: [{
-              text: `You are a friendly,
-               concise AI job suggestion assistant.
-                Provide short, clear, and human-like responses focused on job suggestions,
-                career advice, or skill recommendations.
-                Avoid long or confusing replies.,
-                
-                Use simple formatting: bullet points or numbered lists for multiple items,
-                plain text for single suggestions.
-                Avoid excessive special characters (e.g., asterisks, hashtags) and markdown artifacts. 
-                Be clear and encouraging. Example: "Try learning Python for data analyst roles. Check out online courses!" Conversation so far:\n${conversationHistory.map(m => `${m.sender}: ${m.text}`).join("\n")}\nAI reply to last user message: ${userText}`
+              text: `You are a professional AI career advisor, delivering concise and polished responses in a formal yet approachable tone, like a career counselor. Provide short responses (1-2 sentences) focused on job suggestions, career advice, or skill recommendations. Always include 1-2 brief follow-up questions to refine suggestions until the user is satisfied. Keep responses compact to fit within a 400px-wide container. Use simple HTML for formatting:
+- Bullet points: <ul><li> for lists, keeping items concise.
+- Tables: <table border="1"><tr><th>Header</th></tr><tr><td>Item</td></tr></table> for pros/cons or comparisons, respecting 400px width.
+- Highlight key text: <span class="highlight-primary">text</span> for emphasis or <span class="highlight-secondary">text</span> for secondary points.
+- Links: <a href="url">text</a> for resources, ensuring clarity.
+- Use emojis sparingly (e.g., ✅), only for subtle emphasis. Avoid markdown (no ** or #) and casual slang.
+
+Example: "Consider a career in data analysis. <span class="highlight-primary">Learning Python</span> could be a strong start. ✅ What is your current skill set? Are you interested in technical roles?"
+
+Conversation so far:
+${conversationHistory.map(m => `${m.sender}: ${m.text}`).join("\n")}
+
+AI reply to last user message: ${userText}`
             }]
           }
         ]
@@ -67,7 +70,7 @@ sendText.addEventListener("click", async () => {
     });
 
     let data = await response.json();
-    let aiReply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn’t come up with a job suggestion right now.";
+    let aiReply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn’t provide a suggestion at this time. Could you share your professional background? ✅";
     let aiText = document.createElement("div");
     aiText.classList.add("aiTexts");
     aiText.innerHTML = `<p>${aiReply.replace(/\n/g, "<br>")}</p>`;
@@ -85,7 +88,7 @@ sendText.addEventListener("click", async () => {
     console.error("API Error:", err);
     let errorText = document.createElement("div");
     errorText.classList.add("aiTexts");
-    errorText.innerHTML = `<p>Error fetching job suggestion.</p>`;
+    errorText.innerHTML = `<p>An error occurred. Please try again or provide more details. ✅</p>`;
     chatsectionDiv.appendChild(errorText);
     scrollToLatest();
   }
@@ -242,7 +245,7 @@ themeToggle.addEventListener('change', () => {
   }
 });
 
-// save theme  
+// i will make cahnges in this part latter 
 
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme === 'dark') {
@@ -251,4 +254,4 @@ if (savedTheme === 'dark') {
 } else {
   document.body.classList.remove('dark-mode');
   themeToggle.checked = false;
-}
+} 
