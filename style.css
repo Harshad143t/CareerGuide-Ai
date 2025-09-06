@@ -475,3 +475,60 @@ body.dark-mode,
 .dark-mode .highlight-secondary {
   color: #9ca3af; 
 }
+
+
+.featureMsg .confirmBtn {
+  margin-top: 10px;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 20px;
+  background-color: #ef4444; 
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.featureMsg .confirmBtn:hover {
+  background-color: #dc2626;
+  transform: scale(1.05);
+}
+
+.featureMsg .cancelBtn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 20px;
+  background-color: #6b7280; 
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.featureMsg .cancelBtn:hover {
+  background-color: #4b5563;
+  transform: scale(1.05);
+}
+
+
+.dark-mode .featureMsg .confirmBtn {
+  background-color: #f87171; 
+  color: #1f2937; 
+}
+
+.dark-mode .featureMsg .confirmBtn:hover {
+  background-color: #ef4444;
+  color: #fff;
+}
+
+.dark-mode .featureMsg .cancelBtn {
+  background-color: #9ca3af; 
+  color: #1f2937;
+}
+
+.dark-mode .featureMsg .cancelBtn:hover {
+  background-color: #6b7280;
+  color: #fff;
+}
