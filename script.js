@@ -95,19 +95,33 @@ AI reply to last user message: ${userText}`
 });
 
 clearBTN.addEventListener("click", () => {
-  conversationHistory = [];
-  localStorage.removeItem("chatHistory");
-  chatsectionDiv.innerHTML = "";
+  let oldMsg = document.querySelector(".featureMsg");
+  if (oldMsg) oldMsg.remove();
 
   let msgDiv = document.createElement("div");
   msgDiv.classList.add("featureMsg");
-  msgDiv.textContent = "Chat cleared";
+  msgDiv.innerHTML = `
+    <span>Are you sure you want to clear chat?</span>
+    <button id="confirmClear" class="confirmBtn">Confirm</button>
+    <button id="cancelClear" class="cancelBtn">Cancel</button>
+  `;
 
   document.body.appendChild(msgDiv);
 
-  setTimeout(() => {
+  document.getElementById("confirmClear").addEventListener("click", () => {
+    conversationHistory = [];
+    localStorage.removeItem("chatHistory");
+    chatsectionDiv.innerHTML = "";
+
+    msgDiv.textContent = "Chat cleared ✅";
+    setTimeout(() => {
+      msgDiv.remove();
+    }, 2000);
+  });
+
+  document.getElementById("cancelClear").addEventListener("click", () => {
     msgDiv.remove();
-  }, 2000);
+  });
 });
 
 chatInput.addEventListener("focus", () => {
@@ -255,3 +269,4 @@ if (savedTheme === 'dark') {
   document.body.classList.remove('dark-mode');
   themeToggle.checked = false;
 } 
+
