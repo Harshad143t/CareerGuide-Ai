@@ -219,7 +219,7 @@ dnwBTN.addEventListener("click", () => {
 
   let msgDiv = document.createElement("div");
   msgDiv.classList.add("featureMsg");
-  msgDiv.textContent = "Opps! Harshad is still working on this feature";
+  msgDiv.textContent = "Harshad is still working on this feature";
 
   document.body.appendChild(msgDiv);
 
