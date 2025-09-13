@@ -21,9 +21,6 @@ CareerGuide is a web app that helps users explore career paths and skill develop
 
 ---
 ## App is live at
-- 
+- https://harshad143t.github.io/CareerGuide-Ai/
+ 
 
-## Setup
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/Harshad143t/CareerGuide-Ai.git
