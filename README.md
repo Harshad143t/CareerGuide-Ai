@@ -13,7 +13,7 @@ CareerGuide is a web app that helps users explore career paths and skill develop
 
 ---
 
-## Tech Stack
+## Tech
 - **Frontend:** HTML, CSS, JavaScript  
 - **AI:** Google Gemini API  
 - **Storage:** LocalStorage (chats & theme)  
