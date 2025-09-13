@@ -28,6 +28,16 @@ sendText.addEventListener("click", async () => {
   let userText = chatInput.value.trim();
   if (!userText) return;
 
+  if (!currentChatId || !allConversations[currentChatId]) {
+    let newId = Date.now().toString();
+    let newName = "Chat " + (Object.keys(allConversations).length + 1);
+    allConversations[newId] = { name: newName, messages: [] };
+    currentChatId = newId;
+    localStorage.setItem("allConversations", JSON.stringify(allConversations));
+    localStorage.setItem("currentChatId", newId);
+    renderHistory();
+  }
+
   let chatText = document.createElement("div");
   chatText.classList.add("chatTexts");
   chatText.innerHTML = `<p>${userText}</p>`;
@@ -39,6 +49,11 @@ sendText.addEventListener("click", async () => {
 
   conversationHistory.push({ sender: "User", text: userText });
   localStorage.setItem("chatHistory", JSON.stringify(conversationHistory));
+
+  if (currentChatId && allConversations[currentChatId]) {
+    allConversations[currentChatId].messages = conversationHistory;
+    localStorage.setItem("allConversations", JSON.stringify(allConversations));
+  }
 
   chatInput.value = "";
 
@@ -81,6 +96,10 @@ AI reply to last user message: ${userText}`
 
     conversationHistory.push({ sender: "AI", text: aiReply });
     localStorage.setItem("chatHistory", JSON.stringify(conversationHistory));
+    if (currentChatId && allConversations[currentChatId]) {
+      allConversations[currentChatId].messages = conversationHistory;
+      localStorage.setItem("allConversations", JSON.stringify(allConversations));
+    }
 
     scrollToLatest();
 
@@ -95,34 +114,44 @@ AI reply to last user message: ${userText}`
 });
 
 clearBTN.addEventListener("click", () => {
-  let oldMsg = document.querySelector(".featureMsg");
-  if (oldMsg) oldMsg.remove();
+  if (conversationHistory.length > 0 && currentChatId) {
+    let oldMsg = document.querySelector(".featureMsg");
+    if (oldMsg) oldMsg.remove();
 
-  let msgDiv = document.createElement("div");
-  msgDiv.classList.add("featureMsg");
-  msgDiv.innerHTML = `
-    <span>Are you sure you want to clear chat?</span>
-    <button id="confirmClear" class="confirmBtn">Confirm</button>
-    <button id="cancelClear" class="cancelBtn">Cancel</button>
-  `;
+    let msgDiv = document.createElement("div");
+    msgDiv.classList.add("featureMsg");
+    msgDiv.innerHTML = `
+      <span>Are you sure you want to clear chat?</span>
+      <button id="confirmClear" class="confirmBtn">Confirm</button>
+      <button id="cancelClear" class="cancelBtn">Cancel</button>
+    `;
 
-  document.body.appendChild(msgDiv);
+    document.body.appendChild(msgDiv);
 
-  document.getElementById("confirmClear").addEventListener("click", () => {
-    conversationHistory = [];
-    localStorage.removeItem("chatHistory");
-    chatsectionDiv.innerHTML = "";
+    document.getElementById("confirmClear").addEventListener("click", () => {
+      delete allConversations[currentChatId];
+      localStorage.setItem("allConversations", JSON.stringify(allConversations));
 
-    msgDiv.textContent = "Chat cleared ✅";
-    setTimeout(() => {
+      conversationHistory = [];
+      chatsectionDiv.innerHTML = "";
+      localStorage.removeItem("chatHistory");
+      currentChatId = null;
+      localStorage.removeItem("currentChatId");
+
+      renderHistory();
+
+      msgDiv.textContent = "Chat deleted";
+      setTimeout(() => {
+        msgDiv.remove();
+      }, 2000);
+    });
+
+    document.getElementById("cancelClear").addEventListener("click", () => {
       msgDiv.remove();
-    }, 2000);
-  });
-
-  document.getElementById("cancelClear").addEventListener("click", () => {
-    msgDiv.remove();
-  });
+    });
+  }
 });
+
 
 chatInput.addEventListener("focus", () => {
   searchBtn.style.borderTopRightRadius = "20px";
@@ -213,6 +242,9 @@ function typeEffect() {
 
 typeEffect();
 
+// i will make cahnges in this part latter i have to add download pdf feature
+
+
 dnwBTN.addEventListener("click", () => {
   let oldMsg = document.querySelector(".featureMsg");
   if (oldMsg) oldMsg.remove();
@@ -234,32 +266,31 @@ themeToggle.addEventListener('change', () => {
     document.body.classList.add('dark-mode');
     localStorage.setItem('theme', 'dark');
 
-  let msgDiv = document.createElement("div");
-  msgDiv.classList.add("featureMsg");
-  msgDiv.textContent = "Dark mode applied";
+    let msgDiv = document.createElement("div");
+    msgDiv.classList.add("featureMsg");
+    msgDiv.textContent = "Dark mode applied";
 
-  document.body.appendChild(msgDiv);
+    document.body.appendChild(msgDiv);
 
-  setTimeout(() => {
-    msgDiv.remove();
-  }, 2500);
+    setTimeout(() => {
+      msgDiv.remove();
+    }, 2500);
 
   } else {
     document.body.classList.remove('dark-mode');
     localStorage.setItem('theme', 'light');
     let msgDiv = document.createElement("div");
-  msgDiv.classList.add("featureMsg");
-  msgDiv.textContent = "light mode applied";
+    msgDiv.classList.add("featureMsg");
+    msgDiv.textContent = "light mode applied";
 
-  document.body.appendChild(msgDiv);
+    document.body.appendChild(msgDiv);
 
-  setTimeout(() => {
-    msgDiv.remove();
-  }, 2500);
+    setTimeout(() => {
+      msgDiv.remove();
+    }, 2500);
   }
 });
 
-// i will make cahnges in this part latter 
 
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme === 'dark') {
@@ -268,5 +299,140 @@ if (savedTheme === 'dark') {
 } else {
   document.body.classList.remove('dark-mode');
   themeToggle.checked = false;
-} 
+}
 
+// hostory section part 
+
+const menuBtn = document.getElementById("menu");
+const historyDiv = document.getElementById("history");
+const menuIcon = document.getElementById("menuIcon");
+const closeIcon = document.getElementById("closeIcon");
+const newChatBtn = document.getElementById("newChatBtn");
+
+let allConversations = JSON.parse(localStorage.getItem("allConversations")) || {};
+let currentChatId = localStorage.getItem("currentChatId") || null;
+
+function renderHistory() {
+  historyDiv.innerHTML = "";
+  Object.keys(allConversations).forEach(id => {
+    let span = document.createElement("span");
+    span.classList.add("historyText");
+    span.textContent = allConversations[id].name;
+
+    let delIcon = document.createElement("i");
+    delIcon.classList.add("fa-solid", "fa-xmark", "historyDelbtn");
+    span.appendChild(delIcon);
+
+    span.addEventListener("click", () => {
+      if (id !== currentChatId) {
+        currentChatId = id;
+        localStorage.setItem("currentChatId", id);
+        loadConversation(id);
+      }
+    });
+
+    delIcon.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      let oldMsg = document.querySelector(".featureMsg");
+      if (oldMsg) oldMsg.remove();
+
+      let msgDiv = document.createElement("div");
+      msgDiv.classList.add("featureMsg");
+      msgDiv.innerHTML = `
+        <span>Are you sure you want to clear chat?</span>
+        <button id="confirmClear" class="confirmBtn">Confirm</button>
+        <button id="cancelClear" class="cancelBtn">Cancel</button>
+      `;
+
+      document.body.appendChild(msgDiv);
+
+      document.getElementById("confirmClear").addEventListener("click", () => {
+        delete allConversations[id];
+        if (currentChatId === id) {
+          currentChatId = null;
+          chatsectionDiv.innerHTML = "";
+          localStorage.removeItem("chatHistory");
+        }
+        localStorage.setItem("allConversations", JSON.stringify(allConversations));
+        renderHistory();
+        msgDiv.remove();
+      });
+
+      document.getElementById("cancelClear").addEventListener("click", () => {
+        msgDiv.remove();
+      });
+    });
+
+    historyDiv.appendChild(span);
+  });
+}
+
+function loadConversation(id) {
+  chatsectionDiv.innerHTML = "";
+  conversationHistory = allConversations[id].messages;
+  conversationHistory.forEach(msg => {
+    let div = document.createElement("div");
+    div.classList.add(msg.sender === "User" ? "chatTexts" : "aiTexts");
+    div.innerHTML = `<p>${msg.text}</p>`;
+    chatsectionDiv.appendChild(div);
+  });
+  localStorage.setItem("chatHistory", JSON.stringify(conversationHistory));
+}
+
+function createNewChat() {
+  let msgDiv = document.createElement("div");
+  msgDiv.classList.add("featureMsg");
+  msgDiv.innerHTML = `
+        <span>New chat created</span>
+      `;
+
+  document.body.appendChild(msgDiv);
+  setTimeout(() => {
+    msgDiv.remove();
+  }, 2500);
+
+  chatsectionDiv.innerHTML = "";
+  conversationHistory = [];
+  localStorage.setItem("chatHistory", JSON.stringify([]));
+
+  let newId = Date.now().toString();
+  let newName = "Chat " + (Object.keys(allConversations).length + 1);
+
+  allConversations[newId] = { name: newName, messages: [] };
+  currentChatId = newId;
+  localStorage.setItem("allConversations", JSON.stringify(allConversations));
+  localStorage.setItem("currentChatId", newId);
+  renderHistory();
+}
+
+if (!currentChatId || !allConversations[currentChatId]) {
+  if (Object.keys(allConversations).length === 0) {
+    createNewChat(); 
+  } else {
+    let firstId = Object.keys(allConversations)[0];
+    currentChatId = firstId;
+    localStorage.setItem("currentChatId", firstId);
+    loadConversation(firstId);
+  }
+} else {
+  loadConversation(currentChatId);
+}
+renderHistory();
+
+newChatBtn.addEventListener("click", createNewChat);
+
+
+menuBtn.onclick = () => {
+  if (historyDiv.classList.contains("active")) {
+    historyDiv.classList.remove("active");
+    setTimeout(() => { historyDiv.style.display = "none"; }, 300);
+    menuIcon.style.display = "inline-block";
+    closeIcon.style.display = "none";
+  } else {
+    historyDiv.style.display = "flex";
+    setTimeout(() => { historyDiv.classList.add("active"); }, 10);
+    menuIcon.style.display = "none";
+    closeIcon.style.display = "inline-block"; 
+  }
+};
