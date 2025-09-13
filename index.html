@@ -2,49 +2,67 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="animations.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <title>Career Suggestion App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>Career Suggestion App</title>
 </head>
 
 <body>
 
-    <section id="nav">CareerGuide
-        <label class="switch">o
-            <input type="checkbox" id="themeToggle">
-            <span class="slider round"></span>
-        </label>
-    </section>
+  <section id="nav">
+    <button id="menu">
+      <i id="closeIcon" class="fa-solid fa-xmark" style="display:none;"></i>
+      <i id="menuIcon" class="fa-solid fa-bars"></i>
+    </button>
+    CareerGuide
+    <button id="newChatBtn" title="Start new chat">
+      <i class="fa-solid fa-wand-magic-sparkles"></i>
+    </button>
+    <label class="switch">
+      <input type="checkbox" id="themeToggle">
+      <span class="slider round"></span>
+    </label>
+  </section>
 
-    <div id="chat">
-        <span id="wellcome"></span>
+  <div id="history">
+    <span class="historyText">
+      This is the chat history
+      <i class="fa-solid fa-xmark historyDelbtn"></i>
+    </span>
+    <span class="historyText">
+      Another chat history
+      <i class="fa-solid fa-xmark historyDelbtn"></i>
+    </span>
+  </div>
 
-        <div id="chatsection">
 
-        </div>
+  <div id="chat">
+    <span id="wellcome"></span>
 
-        <section id="btmsection">
-
-            <search id="search">
-                <textarea id="chatInput" type="text" placeholder="Share your Interests"></textarea>
-                <button id="searchBtn"><i id="up" class="fa-solid fa-arrow-up"></i></button>
-            </search>
-
-            <button id="dnwBTN"><i class="fa-solid fa-cloud-arrow-down"></i>PDF</button>
-            <button id="clearBTN"><i class="fa-solid fa-trash"></i>CHAT</button>
-        
-        </section>
+    <div id="chatsection">
 
     </div>
 
-    <script src="script.js"></script>
-    <script src="server.js"></script>
+    <section id="btmsection">
+
+      <search id="search">
+        <textarea id="chatInput" type="text" placeholder="Share your Interests"></textarea>
+        <button id="searchBtn"><i id="up" class="fa-solid fa-arrow-up"></i></button>
+      </search>
+
+      <button id="dnwBTN"><i class="fa-solid fa-cloud-arrow-down"></i>PDF</button>
+      <button id="clearBTN"><i class="fa-solid fa-trash"></i>CHAT</button>
+
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+  <script src="pdf.js"></script>
 </body>
 
 </html>
-
-
