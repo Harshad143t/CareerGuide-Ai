@@ -20,8 +20,10 @@ CareerGuide is a web app that helps users explore career paths and skill develop
 - **UI:** Font Awesome, custom CSS  
 
 ---
+## App is live at
+- 
 
 ## Setup
 1. Clone the repo:
    ```bash
-   git clone https://github.com/Harshad143t/career-guide.git
+   git clone https://github.com/Harshad143t/CareerGuide-Ai.git
