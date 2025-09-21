@@ -601,6 +601,7 @@ body.dark-mode,
   transition: background-color 0.3s ease, transform 0.2s ease;
   position: relative;
   display: inline-block;
+  cursor: pointer;
 }
 
 .historyText:hover {
@@ -668,4 +669,231 @@ body.dark-mode,
 
 .dark-mode #menu {
   color: #979494;
+}
+
+/*rutu's part*/
+.action-btn {
+  position: absolute;
+  left: 90px;
+  background-color: #747782;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px;
+  font-size:20px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition:  0.3s ease, transform 0.2s ease;
+}
+
+.action-btn i {
+  font-size: 16px;
+}
+
+.action-btn:hover {
+  transform: scale(1.05);
+}
+
+.dark-mode .action-btn {
+  background-color: #2c2c2c;
+  color: #e0e0e0;
+      color: #aaa;
+
+}
+.dark-mode .action-btn i {
+    color: #aaa;
+}
+
+
+#skillsPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  border: 1px solid #e5e7eb;
+  width: 300px;
+  max-width: 95%;
+  z-index: 2000;
+  text-align: center;
+}
+
+#skillsPopup h3 {
+  margin-bottom: 12px;
+  color: #1f2937;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+#skillsPopup p {
+  font-size: 15px;
+  margin-bottom: 16px;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+  justify-content: center;
+}
+
+.skill-tag {
+  padding: 8px 14px;
+  border-radius: 16px;
+  background: #e5e7eb;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.skill-tag:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.skill-tag.selected {
+  background: #1e40af;
+  color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+#closeSkillsBtn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background: #ef4444;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+#closeSkillsBtn:hover {
+  background: #dc2626;
+  transform: scale(1.05);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode #skillsPopup {
+  background: #2c2c2c;
+  border: 1px solid #444;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+}
+
+.dark-mode #skillsPopup h3 {
+  color: #e0e0e0;
+}
+
+.dark-mode #skillsPopup p {
+  color: #9ca3af;
+}
+
+.dark-mode .skill-tag {
+  background: #333;
+  color: #e0e0e0;
+}
+
+.dark-mode .skill-tag:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .skill-tag.selected {
+  background: #4a90e2;
+  color: #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode #closeSkillsBtn {
+  background: #f87171;
+  color: #1f2937;
+}
+
+.dark-mode #closeSkillsBtn:hover {
+  background: #ef4444;
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Light mode styles */
+.topic-suggestion {
+  background: #f0f8ff;
+  border-left: 4px solid #007bff;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.topic-suggestion .fa-lightbulb {
+  color: #007bff;
+  font-size: 16px;
+}
+
+.topic-suggestion span {
+  font-size: 14px;
+  color: #333;
+  flex-grow: 1;
+}
+
+.topic-suggestion strong {
+  color: #007bff;
+}
+
+.topic-suggestion .quick-new-chat-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.topic-suggestion .quick-new-chat-btn:hover {
+  background: #0056b3;
+}
+
+body.dark-mode .topic-suggestion {
+  background: #2a2d3b;
+  border-left: 4px solid #4dabf7;
+}
+
+body.dark-mode .topic-suggestion .fa-lightbulb {
+  color: #4dabf7;
+}
+
+body.dark-mode .topic-suggestion span {
+  color: #e0e6ed;
+}
+
+body.dark-mode .topic-suggestion strong {
+  color: #4dabf7;
+}
+
+body.dark-mode .topic-suggestion .quick-new-chat-btn {
+  background: #4dabf7;
+  color: #1a1d24;
+}
+
+body.dark-mode .topic-suggestion .quick-new-chat-btn:hover {
+  background: #339af0;
 }
